@@ -1,9 +1,35 @@
 package com.test;
-
-import org.testng.annotations.Test;
+import java.time.Duration;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
 
 public class BaseTest {
-  @Test
-  public void f() {
-  }
+    private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
+
+    @BeforeSuite
+    public void setup() {
+        // No need to initialize driver here, it will be initialized per thread in @BeforeMethod
+    }
+
+    @BeforeMethod
+    public void setupDriver() {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get("https://ecommerce-playground.lambdatest.io");
+        driverThreadLocal.set(driver);
+    }
+
+    public WebDriver getDriver() {
+        return driverThreadLocal.get();
+    }
+
+    @AfterMethod
+    public void cleanup() {
+        if (driverThreadLocal.get() != null) {
+            driverThreadLocal.get().quit();
+            driverThreadLocal.remove();
+        }
+    }
 }
