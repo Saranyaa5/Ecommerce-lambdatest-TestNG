@@ -3,7 +3,7 @@ package com.util;
 import org.testng.annotations.DataProvider;
 
 public class DataProviderClass {
-    
+
     @DataProvider(name = "validRegistrationData")
     public Object[][] getValidRegistrationData() {
         return new Object[][] {
@@ -11,7 +11,7 @@ public class DataProviderClass {
             {"Saran", "A", "", "1239306", "12345", "12345", false}
         };
     }
-    
+
     @DataProvider(name = "invalidRegistrationData")
     public Object[][] getInvalidRegistrationData() {
         return new Object[][] {
@@ -21,6 +21,16 @@ public class DataProviderClass {
             {"priya", "ram", "priya123@gmail.com", "1234567891", "", "1234", true, "Password must be between", "password"},
             {"priya", "ram", "priya123@gmail.com", "1234567891", "1234", "4321", true, "Password confirmation", "passwordMismatch"},
             {"priya", "ram", "priya123@gmail.com", "1234567891", "1234", "1234", false, "Privacy Policy", "privacyPolicy"}
+        };
+    }
+
+    @DataProvider(name = "loginDetails")
+    public Object[][] loginDetails() {
+        return new Object[][] {
+            {"atgs2@gmail.com", "12345","check1"},
+            {"atk62@gmail.com", "1234", "check2"},
+            {"", "12345", "check3"},
+            {"", "", "check4"}
         };
     }
 }
